@@ -1,1 +1,102 @@
+# Leetcode 题解 - 数据结构
+<!-- GFM-TOC -->
+* [Leetcode 题解 - 数据结构](#leetcode-题解---数据结构)
+    * [栈和队列](#二叉树的遍历)
+        * [1. 用队列实现栈](#1-用队列实现栈)
+        * [2. 用栈实现队列](#2-用栈实现队列)
+    * [前缀树](#前缀树)
+        * [1. 前缀树](#1-前缀树)
+<!-- GFM-TOC -->
 
+## 栈和队列
+
+### 1. 用队列实现栈
+
+225\. Implement Stack using Queues (Easy)
+
+[Leetcode](https://leetcode.com/problems/implement-stack-using-queues/) / [力扣](https://leetcode-cn.com/problems/implement-stack-using-queues/)
+
+```python
+class MyStack:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.queue1 = collections.deque()
+        self.queue2 = collections.deque()
+
+    def push(self, x: int) -> None:
+        """
+        Push element x onto stack.
+        """
+        self.queue2.append(x)
+        while self.queue1:
+            self.queue2.append(self.queue1.popleft())
+        self.queue1, self.queue2 = self.queue2, self.queue1
+
+    def pop(self) -> int:
+        """
+        Removes the element on top of the stack and returns that element.
+        """
+        return self.queue1.popleft()
+
+    def top(self) -> int:
+        """
+        Get the top element.
+        """
+        return self.queue1[0]
+
+    def empty(self) -> bool:
+        """
+        Returns whether the stack is empty.
+        """
+        return not self.queue1
+```
+
+### 2. 用栈实现队列
+
+232\. Implement Queue using Stacks (Easy)
+
+[Leetcode](https://leetcode.com/problems/implement-queue-using-stacks/) / [力扣](https://leetcode-cn.com/problems/implement-queue-using-stacks/)
+
+```python
+class MyQueue:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.stack1 = []
+        self.stack2 = []
+
+    def push(self, x: int) -> None:
+        """
+        Push element x to the back of queue.
+        """
+        self.stack1.append(x)
+
+    def pop(self) -> int:
+        """
+        Removes the element from in front of queue and returns that element.
+        """
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2.pop()
+
+    def peek(self) -> int:
+        """
+        Get the front element.
+        """
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+        return self.stack2[-1]
+
+    def empty(self) -> bool:
+        """
+        Returns whether the queue is empty.
+        """
+        return not self.stack1 and not self.stack2
+```
