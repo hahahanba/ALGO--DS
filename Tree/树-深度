@@ -1,1 +1,191 @@
+# Leetcode 题解 - 树
+<!-- GFM-TOC -->
+* [Leetcode 题解 - 树](#leetcode-题解---树)
+    * [树的深度](#树的深度)
+        * [1. 二叉树最大深度](#1-二叉树最大深度)
+        * [2. 二叉树最小深度](#2-二叉树最小深度)
+    * [其他](#其他)
+        * [1. 层数最深叶子节点的和](#1-层数最深叶子节点的和)
+<!-- GFM-TOC -->
 
+## 树的深度
+
+### 1. 二叉树最大深度
+
+104\.  Maximum Depth of Binary Tree (Easy)
+
+[Leetcode](https://leetcode.com/problems/maximum-depth-of-binary-tree/) / [力扣](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/)
+
+```python
+## 递归1:定义全局最大值
+def maxDepth(self, root: TreeNode) -> int:
+    self.maxDepth = 0
+    def helper(root, depth):
+        if not root:
+            return
+        if depth > self.maxDepth:
+            self.maxDepth = depth
+        helper(root.left, depth + 1)
+        helper(root.right, depth + 1)
+
+    helper(root, 1)
+    return self.maxDepth
+```
+
+## 递归2
+def maxDepth(self, root: TreeNode) -> int:
+    if not root:
+        return 0
+
+    left_high = self.maxDepth(root.left)
+    right_high = self.maxDepth(root.right)
+
+    return max(left_high,right_high) + 1
+```
+
+```python
+## 迭代
+def maxDepth(self, root: TreeNode) -> int:
+    if not root:
+        return 0
+    queue = [(root, 1)]
+    while queue :
+        # 此处不能用栈，如果高度小，小的先进栈后出栈会造成高度错误
+        node, depth = queue.pop(0)
+        if node.left:
+            queue .append((node.left, depth + 1))
+        if node.right:
+            queue .append((node.right, depth + 1))
+    return depth
+```
+
+### 2. 二叉树最小深度
+
+111\.  Minium Depth of Binary Tree (Easy)
+
+[Leetcode](https://leetcode.com/problems/minimum-depth-of-binary-tree/) / [力扣](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/)
+
+```python
+## 递归
+def minDepth(self, root: TreeNode) -> int:
+    if not root:
+        return 0
+
+    if not root.left and not root.right:
+        return 1
+
+    min_depth = 10**9
+    if root.left:
+        min_depth = min(self.minDepth(root.left), min_depth)
+    if root.right:
+        min_depth = min(self.minDepth(root.right), min_depth)
+
+    return min_depth + 1
+```
+
+```python
+## 迭代
+def minDepth(self, root: TreeNode) -> int:
+    if not root:
+        return 0
+    stack = [(root, 1)]
+    min_dep = float('inf')
+    while stack:
+        node, dep = stack.pop()
+        # 遇到叶节点则更新最小深度
+        if not node.left and not node.right:
+            min_dep = min(min_dep, dep)
+        if node.left:
+            stack.append((node.left, dep + 1))
+        if node.right:
+            stack.append((node.right, dep + 1))
+
+    return min_dep
+```
+
+```python
+## 迭代
+def minDepth(self, root: TreeNode) -> int:
+    if not root:
+        return 0
+    # 这种写法不出错
+    queue = collections.deque()
+    queue.append((root, 1))
+    while queue:
+        node, depth = queue.popleft()
+        if not node.left and not node.right:
+            return depth
+        if node.left:
+            queue.append((node.left, depth + 1))
+        if node.right:
+            queue.append((node.right, depth + 1))
+```
+
+## 其他
+
+### 1. 层数最深叶子节点的和
+
+1302\. Deepest Leaves Sum (Medium)
+
+[Leetcode](https://leetcode.com/problems/deepest-leaves-sum/) / [力扣](https://leetcode-cn.com/problems/deepest-leaves-sum/)
+
+```python
+## 递归
+ def __init__(self):
+     self.max_depth = -1
+     self.total = 0
+
+ def deepestLeavesSum(self, root):
+     def helper(root, depth):
+         if not root:
+             return
+         # 每轮更新
+         if depth > self.max_depth:
+             self.max_depth, self.total = depth, root.val
+         elif depth == self.max_depth:
+             self.total += root.val
+         helper(root.left, depth + 1)
+         helper(root.right, depth + 1)
+
+     helper(root, 0)
+     return self.total
+```
+
+```python
+## 迭代
+ def deepestLeavesSum(self, root: TreeNode) -> int:    
+     if not root:
+         return
+     queue = deque([(root, 0)])
+     total, max_depth = 0, -1
+     while queue:
+         node, depth = queue.popleft()
+         if depth > max_depth:
+             max_depth, total = depth, node.val
+         elif depth == max_depth:
+             total += node.val
+         if node.left:
+             queue.append((node.left, depth + 1))
+         if node.right:
+             queue.append((node.right, depth + 1))
+     return total
+```
+
+```python
+## 迭代（优化写法）
+ def deepestLeavesSum(self, root):
+     if not root:
+         return 0
+     queue = deque([root])
+     while queue:
+         # 每轮更新
+         total = 0
+         for _ in range(len(queue)):
+             node = queue.popleft()
+             total += node.val
+             if node.left:
+                 queue.append(node.left)
+             if node.right:
+                 queue.append(node.right)
+     return total
+```
