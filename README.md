@@ -17,5 +17,5 @@
 
 ## 参考资料
 
-- Leetcode
+- [Leetcode](https://leetcode-cn.com/problemset/all/)
 - [花花酱](https://zxi.mytechroad.com/blog/)
