@@ -1,9 +1,12 @@
 # LeedCode
 向大佬前进
 
-## 目录
+## 每日一题
 
 - [每日一题](https://github.com/hahahanba/LeetCode/tree/main/Daily%20Challenge)
+
+## 目录
+
 - [树](https://github.com/hahahanba/LeetCode/tree/main/Tree)
 - [链表](https://github.com/hahahanba/LeetCode/tree/main/Linked%20list)
 - [二分查找](https://github.com/hahahanba/LeetCode/tree/main/Binary%20Search)
