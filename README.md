@@ -1,4 +1,4 @@
-# LeedCode
+# LeetCode
 向大佬前进
 
 ## 每日一题
