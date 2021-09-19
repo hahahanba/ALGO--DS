@@ -23,3 +23,5 @@
 
 - [Leetcode](https://leetcode-cn.com/problemset/all/)
 - [花花酱](https://zxi.mytechroad.com/blog/)
+- [宫水三叶](https://leetcode-cn.com/u/ac_oier/)
+- [负雪明烛](https://leetcode-cn.com/u/fuxuemingzhu/)
